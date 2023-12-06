@@ -1,0 +1,36 @@
+body {
+    height: 100vh;
+}
+
+:root {
+    --primary: #94618e;
+}
+
+.justify {
+    text-align: justify;
+}
+
+.text-purple {
+    color: var(--primary);
+}
+
+.bg-purple {
+    background-color: var(--primary);
+    color: white;
+}
+
+.container-admin{
+    height: calc(100% - 3rem);
+}
+
+.container-admin .card{
+    width: 100%;
+    height: fit-content;
+    margin: auto 0;
+}
+
+button[data-dismiss=alert] {
+    border: none;
+    background: none;
+    font-size: 25px;
+}

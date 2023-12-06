@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif
+}
+html{
+    height: 100vh;
+}
+form{
+    width: 600px;
+    height: fit-content;
+    margin: 0 auto;
+}
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+form input[type=checkbox] {
+    width: fit-content !important;
+    padding: 0 !important;
+}
+
+form input:last-child {
+    margin-bottom: 0 !important;
+}
+
+form button[type=submit] {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.card{
+    padding: 50px 0;
+    border-radius: 16px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+button[data-dismiss=alert] {
+    border: none;
+    background: none;
+    font-size: 25px;
+}
