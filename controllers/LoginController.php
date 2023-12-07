@@ -11,20 +11,29 @@ class LoginController extends BaseAbstract implements FormInterface
     use UserTrait;
     var $user;
     var $post;
+    var $sessionLogin;
+    var $rememberMe;
 
     public function __construct()
     {
         $this->user = new User();
         $this->post = new Post();
+        $this->sessionLogin = $this->getUsernameLogin();
+        $this->rememberMe = $this->isRememberMe();
     }
 
     public function viewForm()
     {
-        $sessionLogin = $this->getUsernameLogin();
-        $rememberMe = $this->isRememberMe();
+        if (!empty($this->sessionLogin) || (!empty($this->rememberMe['username']) && !empty($this->rememberMe['password']))) {
+            $userExist = $this->user->find([
+                'username' => empty($this->sessionLogin) ? $this->rememberMe['username'] : $this->sessionLogin
+            ]);
 
-        if (!empty($sessionLogin) || (!empty($rememberMe['username']) && !empty($rememberMe['password']))) {
-            header("Location: index.php?controller=Login&action=mainActionForm");
+            if($userExist){
+                header("Location: index.php?controller=Login&action=mainActionForm");
+            }else{
+                $this->Logout();
+            }
         } else {
             $this->render('login');
         }
@@ -32,12 +41,12 @@ class LoginController extends BaseAbstract implements FormInterface
 
     public function mainActionForm()
     {
-        if ($this->getUsernameLogin() !== null || (!empty($this->isRememberMe()['username']) && !empty($this->isRememberMe()['password']))) {
+        if ($this->sessionLogin !== null || (!empty($this->rememberMe['username']) && !empty($this->rememberMe['password']))) {
             $data = $this->post->get();
             $this->render('index', [
                 'data' => $data,
-                'usernameCookie' => $this->isRememberMe()['username'],
-                'passwordCookie' => $this->isRememberMe()['password']
+                'usernameCookie' => $this->rememberMe['username'],
+                'passwordCookie' => $this->rememberMe['password']
             ]);
         }
 
@@ -73,17 +82,17 @@ class LoginController extends BaseAbstract implements FormInterface
         }
     }
 
+    protected function redirectBack($sub_path = null)
+    {
+        header("Location: index.php?controller=Login&action=viewForm");
+    }
+
     public function Logout()
     {
         session_destroy();
         setcookie('rememberLogin', '', time() - 3600);
         $this->redirectBack();
         exit();
-    }
-
-    protected function redirectBack($sub_path = null)
-    {
-        header("Location: index.php?controller=Login&action=viewForm");
     }
 }
 

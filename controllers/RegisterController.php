@@ -48,4 +48,9 @@ class RegisterController extends BaseAbstract implements FormInterface
     {
         header("Location: index.php?controller=Register&action=viewForm");
     }
+
+    public function Logout()
+    {
+        // TODO: Implement Logout() method.
+    }
 }

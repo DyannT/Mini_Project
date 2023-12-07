@@ -2,6 +2,8 @@
 abstract class BaseAbstract {
     abstract protected function redirectBack($sub_path = null);
 
+    abstract public function Logout();
+
     protected function render($file, $data = [])
     {
         $view_file = 'views/' . $file . '.php';
